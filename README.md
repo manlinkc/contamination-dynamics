@@ -1,11 +1,9 @@
-## Manlin Chawla CID:01205586
+# M3C Coursework 4: Contamination Dynamics
 
+Part 1 -  This part of the project involved training a neural network to classify hand written digits using the MNIST dataset in Fortran. I have written a serial implementation and a parallelised implementation using MPI. 
 
-# Part 2: Question 4 
-# Subroutine: simulate_antibac
-This subroutine is a modified version of the simulate subroutine which uses the OSI method. 
-The new subroutine takes in input parameters (bm_g,bm_r0,bm_kbc,bm_s0,bm_t0,n) and a new 
-variable tstar, returns C and includes the modified boundary condition at r=1. 
+Part 2 - This part of the project involved writing a program to solve the contamination model equations. The file `p2.f90` contains two main subroutines: the subroutine `simulate_jacobi` uses Jacobi iteration it compute the solution to the contamination model problem, the subroutine `simulate` uses the over-step iteration method to simulate the contamination model. These subroutines are imported as a module into Python and used as part of the simulation. The file `p2.py` contains a python only implementation and also a Python+Fortran implementation which carries out the simulation. This file also generates figures which are used to analyse the performance of each implementation and to analyse the influence of the modified boundary conditions on contamination dynamics. A detailed analysis of the findings are included in the docstrings of the relevant function. All figures are included in this repository.
 
+Part 3 - This part of the project involved writing a Fortran program for simulation the contamination model using AOS method combined with distributed memory approach (with MPI). The main program 1) Initializes MPI, 2) Reads in numerical and model parameters from data.in, 3) calls `simulate_mpi` and 4) writes the final concentration field to a file that can be loaded within numpy. 
 
-
+The subroutine `simulate_mpi` sets up domain decomposition allocating different radial segments of the domain to different processes. Then each process uses AOS iteration to solve the model communicating only as necessary. After completing iterations, the routine gathers the radial portions of the final concentration fields from each process onto process 0 and this full field is returned to the main program. 
